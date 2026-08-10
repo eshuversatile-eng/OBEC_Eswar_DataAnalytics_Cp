@@ -1,0 +1,5 @@
+Order row/distinct-key sanity: [(99441, 99441, 99441)]
+Parents with more than one child order: [(0,)]
+Orphan orders: [(0,)]
+Orphan order items: [(0,)]
+Maximum items per order: [(21,)]

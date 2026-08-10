@@ -1,0 +1,61 @@
+OLIST EXPORTED CSV CLEANING VALIDATION REPORT
+============================================================
+
+Input CSV: C:\Users\HI\OBEC_Eswar_DataAnalytics_Cp\Part-1,Part-2,Part-3,Part-4\Part-1\outputs\task4_inner_join_export.csv
+Cleaned CSV: C:\Users\HI\OBEC_Eswar_DataAnalytics_Cp\Part-1,Part-2,Part-3,Part-4\Part-1\outputs\task7_cleaned_join_export.csv
+
+MISSING VALUES BEFORE CLEANING
+------------------------------------------------------------
+                  column_name  missing_count  missing_percentage
+           customer_unique_id              0                0.00
+                customer_city              0                0.00
+               customer_state              0                0.00
+                     order_id              0                0.00
+                 order_status              0                0.00
+     order_purchase_timestamp              0                0.00
+            order_approved_at            160                0.16
+order_delivered_customer_date           2965                2.98
+order_estimated_delivery_date              0                0.00
+                delivery_days           2965                2.98
+                   delay_days           2965                2.98
+                   item_count            775                0.78
+                 seller_count            775                0.78
+                   item_value            775                0.78
+                freight_value            775                0.78
+                payment_value              1                0.00
+                 review_score            768                0.77
+
+DUPLICATE-ROW VALIDATION
+------------------------------------------------------------
+Rows before drop_duplicates(): 99,441
+Duplicate rows detected: 0
+Rows after drop_duplicates(): 99,441
+Rows removed: 0
+
+IMPUTATION STRATEGY
+------------------------------------------------------------
+Numeric columns were imputed using the median because the median is less sensitive to extreme values and outliers than the mean.
+Categorical and text columns were imputed using the column mode. If no valid mode existed, the literal string 'unknown' was used.
+
+MISSING VALUES AFTER CLEANING
+------------------------------------------------------------
+                  column_name  missing_count  missing_percentage
+           customer_unique_id              0                 0.0
+                customer_city              0                 0.0
+               customer_state              0                 0.0
+                     order_id              0                 0.0
+                 order_status              0                 0.0
+     order_purchase_timestamp              0                 0.0
+            order_approved_at              0                 0.0
+order_delivered_customer_date              0                 0.0
+order_estimated_delivery_date              0                 0.0
+                delivery_days              0                 0.0
+                   delay_days              0                 0.0
+                   item_count              0                 0.0
+                 seller_count              0                 0.0
+                   item_value              0                 0.0
+                freight_value              0                 0.0
+                payment_value              0                 0.0
+                 review_score              0                 0.0
+
+Total missing values remaining: 0

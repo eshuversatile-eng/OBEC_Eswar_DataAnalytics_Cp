@@ -1,0 +1,9 @@
+column_name,dtype_after_conversion,valid_numeric_rows,conversion_or_missing_count,unique_non_null_values,variance_population,dominant_value_ratio,selected_as_continuous_measure,exclusion_reason
+delivery_days,float64,99441,0,94707,88.57646121847314,0.02981667521444877,True,
+delay_days,float64,99441,0,91916,100.67931644312301,0.02981667521444877,True,
+item_count,float64,99441,0,17,0.2878237811267015,0.9014189318289236,True,
+seller_count,float64,99441,0,5,0.01484131392684036,0.9871481582043624,True,
+item_value,float64,99441,0,7621,44045.11792574786,0.017326857131364327,True,
+freight_value,float64,99441,0,7691,465.3510031583576,0.02969600064359771,True,
+payment_value,float64,99441,0,27704,49261.40072579557,0.002554278416347382,True,
+review_score,float64,99441,0,11,1.8048291604877182,0.5804748544362989,True,

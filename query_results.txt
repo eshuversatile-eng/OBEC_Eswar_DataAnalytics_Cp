@@ -1,0 +1,245 @@
+#Task 2
+==========================================================================================
+queries.sql : QUERY 1
+==========================================================================================
+-- ============================================================
+-- OLIST PART-1: SIX REQUIRED SQL QUERIES
+-- Database: database/olist.db
+--
+-- IMPORTANT SCHEMA NOTE:
+-- customers.customer_id = PRIMARY KEY
+-- orders.customer_id    = FOREIGN KEY
+-- customer_unique_id exists in customers, not directly in orders.
+-- ============================================================
+
+
+-- ============================================================
+-- QUERY 1: WHERE with IN
+-- Customers from SP, RJ, or MG.
+-- ============================================================
+SELECT
+    customer_unique_id,
+    customer_city,
+    customer_state
+FROM customers
+WHERE customer_state IN ('SP', 'RJ', 'MG')
+ORDER BY customer_state ASC, customer_city ASC
+Columns
+customer_unique_id, customer_city, customer_state
+Rows Returned : 66233
+64ee476500a01beb94df40f97a108c50 | abadia dos dourados | MG
+afddf43a03a9941624ed42c0b2c17280 | abadia dos dourados | MG
+e1feae9083c4c2895ddf6dc80526a85d | abadia dos dourados | MG
+28af9604f7830ef6d1230fb575c39eb1 | abaete | MG
+ab26557b289641b505abd795c0913683 | abaete | MG
+8b8545eb716cbef0248f0546f3335c1c | abaete | MG
+189af2582a09a860e7ebebaec950b0af | abaete | MG
+1605eaf5744972f09529a6ce287e9e47 | abaete | MG
+5bd046eccd966d97c4fe06e8d75a64a7 | abaete | MG
+5a4fa4919cbf2b049e72be460a380e5b | abaete | MG
+a0e363eb99ec5c321d26ef6618308918 | abaete | MG
+8f7f547488a05660770b51be707eb2a3 | abaete | MG
+ca1a0307fe782c9125fd9264c92db778 | abaete | MG
+2a19a29632faf108fd680a976034fa3d | abaete | MG
+2d69de392ffdb5def80917230154351d | abaete | MG
+5105b52fa696cbca4cd3ddade05149fd | abre campo | MG
+066d4b591fafe57b3cef590f31e301ac | abre campo | MG
+1cadf1dc88bf9e3b2e77d5ee00316668 | abre campo | MG
+83faa5fb102b850f97c0496302cf67ed | abre campo | MG
+9028e5b2ceb7f01832bd635f9c7d6c48 | abre campo | MG
+... 66213 more rows
+
+==========================================================================================
+queries.sql : QUERY 2
+==========================================================================================
+-- ============================================================
+-- QUERY 2: WHERE with NOT IN on the same column
+-- Customers outside SP, RJ, and MG.
+-- ============================================================
+SELECT
+    customer_unique_id,
+    customer_city,
+    customer_state
+FROM customers
+WHERE customer_state IS NOT NULL
+  AND customer_state NOT IN ('SP', 'RJ', 'MG')
+ORDER BY customer_state ASC, customer_city ASC
+Columns
+customer_unique_id, customer_city, customer_state
+Rows Returned : 33208
+650dd69e8e20391188d727da3599e9a7 | brasileia | AC
+39a1da1c9a9a1f4fab3cb5d1fba7a189 | cruzeiro do sul | AC
+3947ca729a860c522a64a49d762baada | cruzeiro do sul | AC
+ae5b7e3fac682643ba98c7614bb2f6ac | cruzeiro do sul | AC
+f036ca45f48f9058e7a227905a55eb7f | epitaciolandia | AC
+ba425b1bf6cab11cc601255a30cd3bdd | manoel urbano | AC
+c19e378364cbc24b597082e6b09dccbd | porto acre | AC
+544d0f13064dc42b8f6957cf43fa5cad | rio branco | AC
+70f326d437e44cf69da00c9169b74fb3 | rio branco | AC
+b1cf91f7efd99001549d2eafa05c66c1 | rio branco | AC
+8c792a4fb7f5d708257abf55fa899ce8 | rio branco | AC
+5f8f12098427d3cbb37e9dcf269bb53c | rio branco | AC
+c73db85789b600b05c503d21441940f9 | rio branco | AC
+f7d7fc0a59ef4363fdce6e3aa069d498 | rio branco | AC
+5dbba6c01268a8ad43f79157bf4454a0 | rio branco | AC
+89fd593957ef80a12f0588913e78b00d | rio branco | AC
+28989ef45087c96e5a4346e88216c2ba | rio branco | AC
+c206fbc96c3496c3d089ced6aa9c69c0 | rio branco | AC
+22c739518f5240ffd2f80e0087aebe26 | rio branco | AC
+36b1c0516f123351ffa87430416dcae5 | rio branco | AC
+... 33188 more rows
+
+==========================================================================================
+queries.sql : QUERY 3
+==========================================================================================
+-- ============================================================
+-- QUERY 3: BETWEEN on a date column
+-- Orders purchased during calendar year 2017.
+--
+-- customer_unique_id is obtained by joining customers because
+-- orders contains customer_id, not customer_unique_id.
+-- ============================================================
+SELECT
+    o.order_id,
+    c.customer_unique_id,
+    o.order_status,
+    o.order_purchase_timestamp
+FROM orders AS o
+INNER JOIN customers AS c
+    ON c.customer_id = o.customer_id
+WHERE o.order_purchase_timestamp
+      BETWEEN '2017-01-01 00:00:00'
+          AND '2017-12-31 23:59:59'
+ORDER BY o.order_purchase_timestamp ASC
+Columns
+order_id, customer_unique_id, order_status, order_purchase_timestamp
+Rows Returned : 45101
+ec7a019261fce44180373d45b442d78f | f7b981e8a280e455ac3cbe0d5d171bd1 | delivered | 2017-01-05 11:56:06
+b95a0a8bd30aece4e94e81f0591249d8 | 83e7958a94bd7f74a9414d8782f87628 | delivered | 2017-01-05 12:01:20
+38bcb524e1c38c2c1b60600a80fc8999 | 728e4a7d0db4845270091ded0923c71f | delivered | 2017-01-05 12:06:36
+7a18a504c1a4b32d883e68de2e1a7db0 | 728e4a7d0db4845270091ded0923c71f | delivered | 2017-01-05 12:09:08
+6acecf438369055d9243e121045cca74 | 728e4a7d0db4845270091ded0923c71f | delivered | 2017-01-05 12:11:23
+34bf4feda1e203af64692d97c6950c39 | da9c90677b1963eca1cf8a14c338cf6e | delivered | 2017-01-05 12:14:58
+40599d3d28b75746952ded75566637b9 | ef89f6e31311594d74becf9e18c73693 | delivered | 2017-01-05 13:01:48
+ce86fa5a5108884726a2244bcae51ae6 | d753459418d268407f19b64be28e3c5a | delivered | 2017-01-05 13:29:03
+7004296aa0256632eaddc171edaf727f | 29a63a400c3ca9982907ce8de1f19527 | delivered | 2017-01-05 13:31:22
+cce1b8a1c5f8b1d224e19628299c8f54 | 6222ef69df52b4ed71be551725551cc0 | delivered | 2017-01-05 13:33:45
+f175d67589e059cbbda956f10f0702e6 | f7be9bec658c62ab6240b44cd26c0b84 | delivered | 2017-01-05 13:34:35
+0bda8164c1a12b6a388ebec8559ee287 | 83e7958a94bd7f74a9414d8782f87628 | delivered | 2017-01-05 13:36:07
+5965b589a33443dd1f820eb7df39762a | b6b2c3c8fd76769b478618a3c2505009 | delivered | 2017-01-05 13:36:41
+db7576b1fe440f4c0a808855aacf0948 | 6222ef69df52b4ed71be551725551cc0 | delivered | 2017-01-05 13:37:27
+1b694ef5b28d3e949a4f0ffeb2c9fcd6 | d753459418d268407f19b64be28e3c5a | delivered | 2017-01-05 13:43:17
+2f9d791088532b218b41f892cc16073b | 6222ef69df52b4ed71be551725551cc0 | delivered | 2017-01-05 13:48:48
+3ce4038922670fead496aeae61a8a393 | 83e7958a94bd7f74a9414d8782f87628 | delivered | 2017-01-05 13:52:39
+205d7052a6505124d200f6fea6b423bc | 83e7958a94bd7f74a9414d8782f87628 | delivered | 2017-01-05 13:59:30
+8a784d47854e4cbc5562362393d504db | 12f5d6e1cbf93dafd9dcc19095df0b3d | delivered | 2017-01-05 14:18:03
+9b91ddcbd6cbceb83d4fd2462ca1f95e | 12f5d6e1cbf93dafd9dcc19095df0b3d | delivered | 2017-01-05 14:22:02
+... 45081 more rows
+
+==========================================================================================
+queries.sql : QUERY 4
+==========================================================================================
+-- ============================================================
+-- QUERY 4: ORDER BY at least two columns
+-- State ascending and purchase timestamp descending.
+-- ============================================================
+SELECT
+    c.customer_state,
+    c.customer_city,
+    o.order_id,
+    o.order_status,
+    o.order_purchase_timestamp
+FROM orders AS o
+INNER JOIN customers AS c
+    ON c.customer_id = o.customer_id
+ORDER BY
+    c.customer_state ASC,
+    o.order_purchase_timestamp DESC
+Columns
+customer_state, customer_city, order_id, order_status, order_purchase_timestamp
+Rows Returned : 99441
+AC | rio branco | 25002fcfee05773be1d9bfe045b95fec | delivered | 2018-08-21 16:31:46
+AC | rio branco | ddb4b2115723295bbe34444bbcb2c1d5 | delivered | 2018-08-10 23:54:45
+AC | rio branco | 48b4f1f96d5ae13b404fe7d041a8d393 | delivered | 2018-08-09 13:41:59
+AC | rio branco | b8d8f5e99979f7cbf541344ae12c8cf4 | delivered | 2018-07-29 21:05:16
+AC | rio branco | f53fee7428c6bc090f954df111b6e0f0 | delivered | 2018-07-26 16:26:25
+AC | rio branco | 57be20dc5f786ed372add8e3f28be447 | delivered | 2018-07-26 13:13:19
+AC | rio branco | 161dded9453a3c4d5b6fd484128249a3 | delivered | 2018-07-25 16:21:06
+AC | rio branco | efbba0637ff7fe0491ef039d3cc3d586 | delivered | 2018-06-28 17:51:59
+AC | rio branco | e317f41180b8a6fa3ce86b6fba6ac3fa | delivered | 2018-06-25 20:52:04
+AC | rio branco | aaf067f5adccd2b8fdf1a9f651a9148a | delivered | 2018-06-16 15:30:56
+AC | cruzeiro do sul | 185e7ea81e4cf0fc1d2f4e8e38e8e7e3 | delivered | 2018-05-28 22:39:59
+AC | rio branco | ac4b7ecdaaa68d5c37e626e9a1f49005 | delivered | 2018-05-03 22:54:21
+AC | xapuri | 0fa05bb83efc10205ac8f4224f10c336 | delivered | 2018-04-26 12:47:48
+AC | rio branco | d0a75d6eda61b8a7261946b34ffb350c | delivered | 2018-04-20 14:44:50
+AC | rio branco | f00cdb8585a46952303de92749d24590 | delivered | 2018-04-12 17:16:59
+AC | rio branco | 0b7cb1c7ea62d95ba39702f4ae850108 | delivered | 2018-04-10 18:21:13
+AC | rio branco | feec317d7127a4dc69cfb507f08c8759 | delivered | 2018-03-04 23:38:00
+AC | rio branco | ca2c921a5b9d60eba417d106c724c6f6 | delivered | 2018-03-01 18:57:22
+AC | rio branco | cd02e1b6a025f2d7003c4c8b2ef28baf | delivered | 2018-02-19 13:38:51
+AC | rio branco | e6d0bbe2424dd2fc97db5851253f90d3 | delivered | 2018-02-17 21:51:05
+... 99421 more rows
+
+==========================================================================================
+queries.sql : QUERY 5
+==========================================================================================
+-- ============================================================
+-- QUERY 5: NOT EXISTS
+-- Find parent customer records with no matching order.
+--
+-- With the complete Olist dataset this may correctly return
+-- zero rows.
+-- ============================================================
+SELECT
+    c.customer_id,
+    c.customer_unique_id,
+    c.customer_city,
+    c.customer_state
+FROM customers AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM orders AS o
+    WHERE o.customer_id = c.customer_id
+)
+Columns
+customer_id, customer_unique_id, customer_city, customer_state
+Rows Returned : 0
+
+==========================================================================================
+queries.sql : QUERY 6
+==========================================================================================
+-- ============================================================
+-- QUERY 6: LIKE using the % wildcard
+-- Customers whose city contains "rio".
+-- ============================================================
+SELECT
+    customer_unique_id,
+    customer_city,
+    customer_state
+FROM customers
+WHERE LOWER(customer_city) LIKE '%rio%'
+ORDER BY customer_city ASC, customer_state ASC
+Columns
+customer_unique_id, customer_city, customer_state
+Rows Returned : 8720
+e96ea4cb3453ea98a7d774de540651e6 | alto rio doce | MG
+bf2646231223621318c2490e0185cd43 | alto rio doce | MG
+e707cd1f1a0137e3787f840bbf9776fa | alto rio doce | MG
+9f25bf3abc2308165affa650cd99d5a8 | alto rio doce | MG
+c2cc868f137c5529e6ba26cabd7ee599 | alto rio novo | ES
+fb1c92d3c484b42976aa3b385237ecb9 | alto rio novo | ES
+1bc1b2bc01973665e8009fe6fca8c187 | aparecida do rio negro | TO
+c38c3af8fe28f2cc69b6404694b47d91 | balneario arroio do silva | SC
+328ecf4ae1638481b5fd47a3d4f10501 | balneario arroio do silva | SC
+ef587b0a4564d660a035027e0058e3e0 | balneario arroio do silva | SC
+2e3db961bc8dc6f9a83c657e5439de28 | balneario arroio do silva | SC
+7e7fcf236cdc1c79610748fbdfdfb189 | balneario barra do sul | SC
+1416fe6aaf934fb87488f207d1ffd930 | balneario barra do sul | SC
+a5cad0a33504fb5b9725ac33ed686359 | balneario barra do sul | SC
+fdf0f44913b448e0d5605ee3b4666e26 | balneario barra do sul | SC
+f62f269f9ce7c41d20a90f70df873f42 | balneario camboriu | SC
+526760f3b7255a26c8a93a96dfaee4a3 | balneario camboriu | SC
+2d6c92e215e5e67fa22737b6c75df406 | balneario camboriu | SC
+fec3e4a7b8f949d64af00058cc06c5c9 | balneario camboriu | SC
+c00f7319ed8fe800e016539497653260 | balneario camboriu | SC
+... 8700 more rows

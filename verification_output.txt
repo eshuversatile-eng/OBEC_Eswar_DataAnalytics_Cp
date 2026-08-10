@@ -1,0 +1,7 @@
+TASK 1 - SQLITE FOREIGN KEY VERIFICATION
+==================================================
+PRAGMA foreign_keys status: 1
+Customers inserted: 96,096
+Orders inserted: 99,441
+PASSED: Invalid foreign-key insert was rejected.
+SQLite error: FOREIGN KEY constraint failed
